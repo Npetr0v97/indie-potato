@@ -1,17 +1,14 @@
 import mongoose from "mongoose";
 
-const connectDB = async () => {
-  if (mongoose.connections[0].readyState) {
-    return true;
-  }
-
+const connectMongoDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Mongodb connected");
-    return true;
-  } catch (error) {
-    console.log(error);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      minPoolSize: 20,
+    });
+    console.log("Connected to MongoDB");
+  } catch (e) {
+    console.log(e);
   }
 };
 
-export default connectDB;
+export default connectMongoDB;
